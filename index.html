@@ -1,0 +1,836 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧭</text></svg>"><title>The Couple Compass</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Public+Sans:wght@400;600;700&display=swap">
+<style>
+:root{
+  --teal:#045d5d; --teal-deep:#03403f; --ink:#0d3331; --paper:#fdfbf5; --card:#f7f3e8;
+  --gold:#e9b949; --gold-ink:#5c430a; --line:#e3dcc9; --muted:#5c6f6d;
+  --good:#2e7d5b; --warn:#d9a514; --act:#c9703a; --urgent:#b8504d;
+  --on-teal:#fdfbf5; --chip:#ece5d3; --gold-line:rgba(233,185,73,.55);
+}
+html{background:#fdfbf5;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:"Public Sans",system-ui,-apple-system,Segoe UI,sans-serif;font-size:16px;line-height:1.55;
+  background:
+    radial-gradient(640px 420px at 88% -60px, rgba(233,185,73,.16), transparent 62%),
+    radial-gradient(720px 520px at -120px 78%, rgba(4,93,93,.07), transparent 62%),
+    var(--paper);
+  background-attachment:fixed}
+.wrap{max-width:700px;margin:0 auto;padding:20px 18px 56px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;line-height:1.18;text-wrap:balance;margin:0 0 10px}
+h1{font-size:2rem}
+h2{font-size:1.4rem}
+h3{font-size:1.1rem}
+p{margin:0 0 12px}
+a{color:var(--teal)}
+.small{font-size:.85rem;color:var(--muted)}
+.eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--teal);margin-bottom:6px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 18px;margin:0 -18px 22px;background:var(--teal);color:var(--on-teal);border-bottom:3px solid var(--gold)}
+.wordmark{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.15rem}
+.wordmark span{color:rgba(253,251,245,.75);font-family:"Public Sans",sans-serif;font-weight:400;font-size:.8rem;margin-left:8px}
+.top a{font-size:.85rem;text-decoration:none;font-weight:600}
+.ctxtag{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--gold-ink);border-radius:999px;padding:5px 12px;white-space:nowrap}
+.card{background:var(--card);border:1.5px solid var(--gold-line);border-radius:14px;padding:18px;margin:0 0 14px}
+.card.tap{cursor:pointer;transition:border-color .15s}
+.card.tap:hover,.card.tap:focus-visible{border-color:var(--gold);box-shadow:0 0 0 3px rgba(233,185,73,.18);outline:none}
+.btn{display:inline-block;border:0;border-radius:999px;padding:13px 26px;font:600 1rem "Public Sans",sans-serif;cursor:pointer;text-decoration:none;text-align:center}
+.btn.gold{background:var(--gold);color:var(--gold-ink)}
+.btn.quiet{background:var(--chip);color:var(--ink);border:1.5px solid var(--gold-line)}
+.btn.line{background:transparent;border:1.5px solid var(--gold);color:var(--teal)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.rhythm{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rhythm .card{margin:0;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-height:150px}
+.rhythm .card h3{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
+.rhythm .mins{align-self:flex-end;margin-top:auto}
+@media (max-width:560px){ .rhythm{grid-template-columns:1fr} .rhythm .card{min-height:0} }
+.rhythm .due{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:var(--gold-ink);border-radius:999px;padding:4px 10px;white-space:nowrap}
+.rhythm .mins{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.pact{background:var(--teal);color:#fdfbf5;border:1.5px solid var(--gold)}
+.pact h2,.pact p{color:#fdfbf5}
+.pact blockquote{font-family:Fraunces,Georgia,serif;font-size:1.15rem;line-height:1.5;margin:14px 0;padding-left:14px;border-left:3px solid var(--gold)}
+.progress{height:6px;background:var(--chip);border-radius:99px;margin:10px 0 22px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .2s}
+.qdir{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-bottom:10px}
+.qdir.E{color:var(--act)} .qdir.N{color:var(--teal)} .qdir.W{color:var(--warn)} .qdir.S{color:var(--good)} .qdir.R{color:var(--muted)}
+.qtext{font-family:Fraunces,Georgia,serif;font-size:1.35rem;line-height:1.3;margin-bottom:6px;text-wrap:balance}
+.qhint{color:var(--muted);font-size:.85rem;margin-bottom:18px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale button{padding:14px 0;border:1.5px solid var(--gold-line);background:var(--card);color:var(--ink);border-radius:10px;font:600 1.05rem "Public Sans",sans-serif;cursor:pointer;font-variant-numeric:tabular-nums}
+.scale button:hover,.scale button:focus-visible{border-color:var(--teal);outline:none}
+.scaleends{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:8px}
+.opts{display:grid;gap:10px}
+.opts button{padding:15px;border:1.5px solid var(--gold-line);background:var(--card);color:var(--ink);border-radius:10px;font:600 1rem "Public Sans",sans-serif;cursor:pointer;text-align:left}
+.opts button:hover,.opts button:focus-visible{border-color:var(--teal);outline:none}
+textarea{width:100%;min-height:110px;padding:12px;border:1.5px solid var(--gold-line);border-radius:10px;background:var(--card);color:var(--ink);font:400 1rem "Public Sans",sans-serif}
+textarea:focus-visible{outline:none;border-color:var(--teal)}
+.navrow{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.navrow button{background:none;border:0;color:var(--muted);font:600 .9rem "Public Sans",sans-serif;cursor:pointer;padding:8px 0}
+.band{position:relative;height:14px;border-radius:99px;margin:14px 2px 6px;background:linear-gradient(90deg,var(--urgent) 0 18%,var(--act) 18% 40%,var(--warn) 40% 72%,var(--good) 72% 100%)}
+.dot{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%)}
+.dot.p1{background:var(--ink);border:2px solid var(--paper)}
+.dot.p2{background:transparent;border:3px solid var(--ink);box-shadow:0 0 0 2px var(--paper) inset}
+.legend{display:flex;gap:16px;font-size:.78rem;color:var(--muted);margin-bottom:4px}
+.legend b{font-variant-numeric:tabular-nums}
+.zone{font-size:.78rem;font-weight:700}
+.gapchip{display:inline-block;font-size:.75rem;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--chip)}
+.gapchip.talk{background:var(--urgent);color:#fff}
+.gapchip.watch{background:var(--warn);color:#3d2e02}
+.convo{border-left:4px solid var(--gold);background:var(--card);border-radius:0 12px 12px 0;padding:14px 16px;margin:0 0 12px}
+.convo .why{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.convo p{margin:0}
+.sbys{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sbys .cell{background:var(--card);border:1.5px solid var(--gold-line);border-radius:10px;padding:12px;font-size:.92rem}
+.sbys .who{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.fnd h3{margin-top:22px}
+.fnd ol{margin:0;padding-left:20px}
+.fnd li{margin:0 0 12px}
+input[type=text]{width:100%;padding:12px;border:1.5px solid var(--gold-line);border-radius:10px;background:var(--card);color:var(--ink);font:400 1rem "Public Sans",sans-serif}
+input[type=text]:focus-visible{outline:none;border-color:var(--teal)}
+.hidden{display:none!important}
+#view-q,#view-results{position:relative;z-index:0}
+#view-q::before,#view-results::before{content:'';position:absolute;top:-24px;right:-90px;width:330px;height:330px;z-index:-1;pointer-events:none;opacity:.07;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cg fill='none' stroke='%23808080' stroke-width='1'%3E%3Ccircle cx='100' cy='100' r='96'/%3E%3Ccircle cx='100' cy='100' r='70'/%3E%3Ccircle cx='100' cy='100' r='5'/%3E%3C/g%3E%3Cg fill='%23808080'%3E%3Cpolygon points='100 8 110 90 100 100 90 90'/%3E%3Cpolygon points='192 100 110 110 100 100 110 90'/%3E%3Cpolygon points='100 192 90 110 100 100 110 110'/%3E%3Cpolygon points='8 100 90 90 100 100 90 110'/%3E%3C/g%3E%3Cg fill='%23808080' opacity='.55' transform='rotate(45 100 100)'%3E%3Cg transform='translate(100 100) scale(.55) translate(-100 -100)'%3E%3Cpolygon points='100 8 110 90 100 100 90 90'/%3E%3Cpolygon points='192 100 110 110 100 100 110 90'/%3E%3Cpolygon points='100 192 90 110 100 100 110 110'/%3E%3Cpolygon points='8 100 90 90 100 100 90 110'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain}
+footer.site{margin-top:36px;padding-top:16px;border-top:2px solid var(--gold);font-size:.85rem;color:var(--muted)}
+footer.site a{font-weight:600}
+@media (max-width:480px){ .sbys{grid-template-columns:1fr} .scale{grid-template-columns:repeat(5,1fr)} h1{font-size:1.7rem} }
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="wordmark">The Couple Compass<span>by Dr. Dee Gupta</span></div>
+  <span id="ctxTag" class="ctxtag hidden"></span>
+</header>
+
+<!-- HOME -->
+<section id="view-home">
+  <h1>Check in with each other, every two weeks</h1>
+  <p>Most relationships don't break from one big betrayal. They erode from a thousand unasked questions. The Compass asks them for you: a short check every second week, a little deeper each month, a full reading every quarter, and once a year, a look at the road ahead.</p>
+  <p class="small">Both of you answer separately on one device, then see your reading together. Your answers never leave this device. Save a reading only if you choose to; it stays in this browser, deletable any time.</p>
+  <div id="homeHistory"></div>
+  <h2 style="margin-top:26px">Choose today's check</h2>
+  <div class="rhythm" id="rhythmCards"></div>
+  <div class="card tap" id="homeFnd" tabindex="0" role="button" style="margin-top:16px">
+    <h3 style="margin:0 0 4px">The Foundation conversations</h3>
+    <p class="small" style="margin:0">Your one-time baseline: twelve open conversations, no scores, had once and revisited only when life shifts. Separate from the checks above.</p>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Make it a ritual</h3>
+    <p class="small" style="margin-bottom:10px">One calendar event, every second week. The Compass tells you which check is due when you open it.</p>
+    <div class="btnrow">
+      <a class="btn line" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Couple%20Compass%20check-in&details=Open%20the%20Compass%20together%3A%20this%20page%20tells%20you%20which%20check%20is%20due.&recur=RRULE:FREQ=WEEKLY;INTERVAL=2">Add to Google Calendar</a>
+      <a class="btn quiet" target="_blank" rel="noopener" href="https://drdeegupta.com/reminders">Subscribe for email reminders</a>
+    </div>
+  </div>
+  <footer class="site">
+    From <em>The Missing System</em> by Dr. Dee Gupta · <a href="https://mybook.to/thmissingsystem" target="_blank" rel="noopener">Get the book</a> · <a href="https://drdeegupta.com" target="_blank" rel="noopener">drdeegupta.com</a>
+  </footer>
+</section>
+
+<!-- UNLOCK -->
+<section id="view-unlock" class="hidden">
+  <div class="card">
+    <h2>This check comes with the book</h2>
+    <p>The check-in is free for everyone, always. The deeper checks are part of <em>The Missing System</em>: your reader code is printed inside the book, in the Compass chapter. Enter it once on this device and everything stays unlocked.</p>
+    <p style="margin-top:14px"><label for="unlockCode"><b>Reader code</b></label></p>
+    <input type="text" id="unlockCode" autocomplete="off" placeholder="Your code from the book">
+    <p class="small hidden" id="unlockErr" style="color:var(--urgent);margin-top:8px">That code does not match. Check the Compass chapter in the book.</p>
+    <div class="btnrow">
+      <button class="btn gold" id="unlockGo">Unlock</button>
+      <button class="btn quiet" id="unlockFree">Do the free check-in instead</button>
+    </div>
+    <p class="small" style="margin-top:12px">No book yet? <a href="https://mybook.to/thmissingsystem" target="_blank" rel="noopener">Pre-order The Missing System</a>.</p>
+  </div>
+  <div class="btnrow"><button class="btn quiet" id="unlockBack">Back</button></div>
+</section>
+
+<!-- HISTORY -->
+<section id="view-history" class="hidden">
+  <h1>Your past readings</h1>
+  <p class="small">Saved only in this browser. Delete them any time.</p>
+  <div id="histBody"></div>
+  <div class="btnrow"><button class="btn quiet" id="histDelete">Delete history</button><button class="btn gold" id="histBack">Back to the Compass</button></div>
+</section>
+
+<!-- PACT -->
+<section id="view-pact" class="hidden">
+  <div class="card pact">
+    <h2>Before your first check, the pact</h2>
+    <p>Read it aloud, both of you. Every question that follows works only because this was agreed first.</p>
+    <blockquote>"We agree to be open with each other, to raise things directly rather than carry them silently, and to face whatever comes as one team. And we agree that in these conversations, honesty is never punished."</blockquote>
+    <button class="btn gold" id="pactAgree">We agree</button>
+  </div>
+</section>
+
+<!-- NAMES -->
+<section id="view-names" class="hidden">
+  <h2 id="namesTitle">Who's checking in?</h2>
+  <p class="small">First names only. They stay on this page.</p>
+  <div class="card">
+    <p><label for="name1"><b>Partner 1</b> answers first</label></p>
+    <input type="text" id="name1" autocomplete="off" placeholder="Name">
+    <p style="margin-top:14px"><label for="name2"><b>Partner 2</b> answers next</label></p>
+    <input type="text" id="name2" autocomplete="off" placeholder="Name">
+    <div class="btnrow"><button class="btn gold" id="namesGo">Start</button><button class="btn quiet" id="namesBack">Back</button></div>
+  </div>
+</section>
+
+<!-- QUESTION -->
+<section id="view-q" class="hidden">
+  <p class="small" id="qWho"></p>
+  <div class="progress"><i id="qBar" style="width:0%"></i></div>
+  <div class="qdir" id="qDir"></div>
+  <div class="qtext" id="qText"></div>
+  <div class="qhint" id="qHint"></div>
+  <div id="qInput"></div>
+  <div class="navrow">
+    <button id="qBack">Back</button>
+    <button id="qSkipNote" class="hidden"></button>
+    <button id="qNext" class="hidden">Continue</button>
+  </div>
+</section>
+
+<!-- HANDOFF -->
+<section id="view-handoff" class="hidden">
+  <div class="card" style="text-align:center;padding:40px 20px">
+    <h2 id="handoffTitle">Done. Now pass the device.</h2>
+    <p id="handoffText"></p>
+    <button class="btn gold" id="handoffGo">I'm ready</button>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="view-results" class="hidden"></section>
+
+<!-- FOUNDATION -->
+<section id="view-foundation" class="hidden">
+  <h1 id="fndTitle">The Foundation conversations</h1>
+  <p id="fndOnboardIntro" class="hidden"><b>Your baseline, before the rhythm starts.</b> These twelve conversations are had once, one per sitting, over your first weeks. Read through them now, pick the first one for tonight, and come back to the rest at your own pace. If you feel broadly aligned, you can skip ahead and return whenever a check points you here.<br><br><b>These are not today's check-in questions.</b> Your first check-in, with its own short scored questions, starts right after this screen.</p>
+  <p>These are not part of any check. They are twelve open conversations you have once, one per sitting, and come back to only when life shifts under you. No scores, no comparing. Just the two of you, ten quiet minutes at a time.</p>
+  <div class="card pact">
+    <p style="margin:0 0 8px"><b>Open with the pact, aloud, both of you:</b></p>
+    <blockquote style="margin:0">"We agree to be open with each other, to raise things directly rather than carry them silently, and to face whatever comes as one team. And we agree that in these conversations, honesty is never punished."</blockquote>
+  </div>
+  <div class="fnd" id="fndBody"></div>
+  <div class="card" style="margin-top:16px">
+    <h3>Keep what you said</h3>
+    <p class="small" style="margin-bottom:10px">Your notes stay in this browser only. Save them as a file whenever you like.</p>
+    <div class="btnrow" style="margin-top:0">
+      <button class="btn quiet" id="fndCopy">Copy our answers</button>
+    </div>
+    <p class="small hidden" id="fndCopied" style="margin-top:10px">Copied. Paste them anywhere you keep private notes.</p>
+  </div>
+  <div class="btnrow"><button class="btn gold hidden" id="foundationGo">Continue to today's check-in</button><button class="btn gold" id="foundationBack">Back to the Compass</button></div>
+</section>
+</div>
+
+<script>
+'use strict';
+/* ---------- storage (conveniences only; page works without it) ---------- */
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+
+/* ---------- cadence wording ---------- */
+var P = {
+  pulse:{ past:'these past two weeks', Past:'These past two weeks', next:'the next two weeks', coming:'the coming two weeks', unit:'check', inPast:'In the past two weeks' },
+  monthly:{ past:'this past month', Past:'This past month', next:'next month', coming:'the coming month', unit:'month', inPast:'In the past month' },
+  quarterly:{ past:'this past quarter', Past:'This past quarter', next:'next quarter', coming:'the coming quarter', unit:'quarter', inPast:'In the past quarter' },
+  annual:{ past:'this past year', Past:'This past year', next:'the year ahead', coming:'the coming year', unit:'year', inPast:'In the past year' }
+};
+var DIRNAME = { E:'Connection', N:'Direction and money', W:'The outside world', S:'Yourself', R:'Reflection' };
+var CHAPTER = { E:2, N:3, S:4, W:5 };
+
+/* ---------- questions ----------
+tier: p pulse+, m monthly+, q quarterly+, a annual only
+noAnnual: excluded from the annual check
+healthy (yn): the healthy answer; trigger fires on the other one */
+var QUESTIONS = [
+ {id:'e1',dir:'E',tier:'p',fmt:'scale',lo:'Not at all',hi:'Completely',t:function(c){return P[c].Past+', how loved did you feel?';}},
+ {id:'e2',dir:'E',tier:'p',fmt:'scale',lo:'Rarely',hi:'Always',t:function(){return 'How heard and understood do you feel in your everyday conversations?';}},
+ {id:'ey1',dir:'E',tier:'p',fmt:'yn',healthy:'No',t:function(){return 'Is there something on your mind you have not talked about yet?';}},
+ {id:'ey2',dir:'E',tier:'p',fmt:'yn',healthy:'Yes',t:function(){return 'Do you feel appreciated by your partner?';}},
+ {id:'ey10',dir:'E',tier:'p',fmt:'yn',healthy:'No',t:function(){return 'Did you share something meaningful with an AI or online that you have not shared with your partner?';}},
+ {id:'ey14',dir:'E',tier:'p',fmt:'yn',healthy:'No',noAnnual:true,t:function(c){return 'Did you spend time '+P[c].past+' guessing what your partner was thinking or feeling about you?';}},
+ {id:'e3',dir:'E',tier:'m',fmt:'scale',lo:'Not at all',hi:'Fully',t:function(){return 'How emotionally supported by your partner have you felt lately?';}},
+ {id:'e4',dir:'E',tier:'m',fmt:'scale',lo:'Dissatisfied',hi:'Very satisfied',t:function(){return 'How satisfied are you with the quality of your time together?';}},
+ {id:'e11',dir:'E',tier:'m',fmt:'scale',lo:'Barely noticed',hi:'Celebrated with me',t:function(){return 'When you shared good news lately, how enthusiastically did your partner respond?';}},
+ {id:'ey3',dir:'E',tier:'m',fmt:'yn',healthy:'Yes',t:function(){return 'Are you comfortable expressing your emotional needs to each other?';}},
+ {id:'ey4',dir:'E',tier:'m',fmt:'yn',healthy:'Yes',noAnnual:true,t:function(c){return 'Have you done something spontaneous, fun, or creative together '+(c==='monthly'?'this month':'this '+P[c].unit)+'?';}},
+ {id:'ey8',dir:'E',tier:'m',fmt:'yn',healthy:'No',t:function(){return 'In recent disagreements, did you ever feel mocked, dismissed, or put down?';}},
+ {id:'ey9',dir:'E',tier:'m',fmt:'yn',healthy:'No',t:function(c){return P[c].inPast+', have you felt lonely even when you were together?';}},
+ {id:'ey15',dir:'E',tier:'m',fmt:'yn',healthy:'No',t:function(){return 'Are you holding something back to protect your partner from worry?';}},
+ {id:'ey16',dir:'E',tier:'m',fmt:'yn',healthy:'No',noAnnual:true,t:function(c){return P[c].inPast+', did you cry, or come close, without your partner knowing?';}},
+ {id:'ey7',dir:'E',tier:'m',fmt:'yn',healthy:'No',noAnnual:true,t:function(c){return 'Have any challenges persisted from last '+P[c].unit+'?';}},
+ {id:'e5',dir:'E',tier:'q',fmt:'scale',lo:'None lately',hi:'Plenty',t:function(){return 'How much fun and adventure do you feel the two of you have together?';}},
+ {id:'ey6',dir:'E',tier:'q',fmt:'pick2',a:'We both stay engaged',b:'One of us withdraws',healthy:'a',t:function(){return 'When you disagree, do you both stay engaged, or does one of you withdraw?';}},
+ {id:'e7',dir:'E',tier:'q',fmt:'scale',lo:'Poorly',hi:'Very well',t:function(){return 'How effectively do the two of you repair after disagreements?';}},
+ {id:'e8',dir:'E',tier:'q',fmt:'scale',lo:'It escalates',hi:'Fully safe',t:function(){return 'How emotionally safe is it to disagree without it escalating?';}},
+ {id:'e9',dir:'E',tier:'q',fmt:'scale',lo:'Rarely',hi:'Almost always',t:function(){return 'When you reach out emotionally, how often does your partner notice and respond?';}},
+ {id:'e6',dir:'E',tier:'q',fmt:'scale',lo:'Not at all',hi:'Fully',t:function(){return 'How physically desired and satisfied have you felt together lately?';}},
+ {id:'e10',dir:'E',tier:'q',fmt:'scale',lo:'Very one-sided',hi:'Balanced',t:function(){return 'How balanced is who initiates physical affection and intimacy?';}},
+ {id:'e12',dir:'E',tier:'q',fmt:'scale',lo:'Rare',hi:'Rich and frequent',t:function(){return 'How satisfied are you with everyday physical affection: a hug, a hand, a kiss in passing?';}},
+ {id:'ey13',dir:'E',tier:'q',fmt:'yn',healthy:'Yes',t:function(){return 'Can the two of you talk about your intimate life openly?';}},
+ {id:'ey5',dir:'E',tier:'q',fmt:'yn',healthy:'Yes',t:function(){return 'Do you feel comfortable saying no, or naming a boundary, with your partner?';}},
+ {id:'c1',dir:'E',tier:'p',fmt:'pick',opts:['Respect','Affection','Freedom','Help','Fun'],t:function(c){return 'What do you most need from your partner in '+P[c].next+'?';}},
+ {id:'n1',dir:'N',tier:'m',fmt:'scale',lo:'Pulling apart',hi:'Fully aligned',t:function(){return 'How aligned do you feel the two of you still are on your long-term goals and vision as a couple?';}},
+ {id:'n2',dir:'N',tier:'m',fmt:'scale',lo:'Very unequal',hi:'Fully equal',t:function(){return 'How equally do you feel you are both contributing to your growth as a couple right now?';}},
+ {id:'n3',dir:'N',tier:'m',fmt:'scale',lo:'Very insecure',hi:'Very secure',t:function(){return 'How secure do you feel about your financial situation together?';}},
+ {id:'n6',dir:'N',tier:'m',fmt:'scale',lo:'On my own',hi:'Fully a team',t:function(){return 'How secure do you feel that the two of you are a team, whatever comes?';}},
+ {id:'ny1',dir:'N',tier:'m',fmt:'yn',healthy:'Yes',t:function(){return 'Do you feel you are still aligned on your long-term goals and vision as a couple?';}},
+ {id:'n4',dir:'N',tier:'q',fmt:'scale',lo:'One-sided',hi:'Truly shared',t:function(){return 'How fairly and sustainably are you sharing the mental and administrative load of running your household?';}},
+ {id:'n5',dir:'N',tier:'q',fmt:'scale',lo:'Misaligned',hi:'Fully aligned',t:function(c){return 'How aligned do you feel on this '+P[c].unit+"'s spending and saving priorities?";}},
+ {id:'n8',dir:'N',tier:'q',fmt:'scale',lo:'One-sided',hi:'Truly shared',t:function(){return 'How shared is the real power over big money decisions in this relationship?';}},
+ {id:'ny2',dir:'N',tier:'q',fmt:'yn',healthy:'Yes',t:function(){return 'Are you on track with your financial goals?';}},
+ {id:'ny3',dir:'N',tier:'q',fmt:'yn',healthy:'Yes',t:function(){return 'Do you feel aligned on how you manage your money day to day?';}},
+ {id:'ny4',dir:'N',tier:'q',fmt:'yn',healthy:'No',t:function(){return "Is there any spending, account, or debt your partner doesn't know about?";}},
+ {id:'ey11',dir:'N',tier:'q',fmt:'yn',healthy:'No',t:function(c){return P[c].inPast+', have you seriously worried about the future of this relationship?';}},
+ {id:'ny5',dir:'N',tier:'q',fmt:'yn',healthy:'No',t:function(){return 'Is there a big decision you two are drifting into rather than actually making?';}},
+ {id:'n7',dir:'N',tier:'a',fmt:'scale',lo:'It shrinks me',hi:'It grows me',t:function(){return 'Does this relationship help you grow into the person you want to become?';}},
+ {id:'na1',dir:'N',tier:'a',fmt:'scale',lo:'Two blurry pictures',hi:'One clear picture',t:function(){return 'How clear and shared is your picture of where the two of you will be financially in three years: home, assets, savings, debts?';}},
+ {id:'na2',dir:'N',tier:'a',fmt:'yn',healthy:'Yes',t:function(){return 'Have you two ever agreed what "enough" looks like: the income and lifestyle at which you would stop trading more time for more money?';}},
+ {id:'na3',dir:'N',tier:'a',fmt:'yn',healthy:'Yes',t:function(){return 'Do you already know whose career takes the lead if a big opportunity, move, or setback comes in the next three years?';}},
+ {id:'na4',dir:'N',tier:'a',fmt:'yn',healthy:'Yes',t:function(){return 'If something happened to you tomorrow, could your partner locate your accounts, passwords, and documents, and would they know your wishes?';}},
+ {id:'na5',dir:'N',tier:'a',fmt:'yn',healthy:'Yes',t:function(){return 'Have you agreed what you owe both sets of parents: money, time, presence, and where it ends?';}},
+ {id:'w1',dir:'W',tier:'m',fmt:'scale',lo:'Highly disruptive',hi:'Healthy boundary',noAnnual:true,t:function(){return 'The impact of work demands on your relationship right now: how healthy is the boundary?';}},
+ {id:'w2',dir:'W',tier:'q',fmt:'scale',lo:'Severe strain',hi:'Unified team',t:function(c){return 'How well are the two of you handling family and in-law expectations this '+P[c].unit+'?';}},
+ {id:'w3',dir:'W',tier:'q',fmt:'scale',lo:'Exposed',hi:'Well protected',t:function(){return 'How protected does your private couple space feel from outside opinions?';}},
+ {id:'w4',dir:'W',tier:'q',fmt:'scale',lo:'Highly disruptive',hi:'Healthy',t:function(){return "Social media's impact on your time and attention together: how healthy is it?";}},
+ {id:'w5',dir:'W',tier:'q',fmt:'scale',lo:'Not enough',hi:'Plenty',t:function(){return 'Do you have enough shared couple friends or community around you?';}},
+ {id:'wy1',dir:'W',tier:'q',fmt:'yn',healthy:'No',t:function(c){return P[c].inPast+", have you felt jealous or less safe because of someone in your partner's life: a colleague, friend, ex, or someone online?";}},
+ {id:'w6',dir:'W',tier:'q',fmt:'scale',lo:'Left me alone',hi:'Stood with me',t:function(){return "When your partner's family or friends and you pulled in different directions, how much did your partner stand with you?";}},
+ {id:'s1',dir:'S',tier:'p',fmt:'scale',lo:'Running on empty',hi:'Full',noAnnual:true,t:function(){return 'Your own overall energy and wellbeing level right now.';}},
+ {id:'s3',dir:'S',tier:'m',fmt:'scale',lo:'Dissatisfied',hi:'Satisfied',noAnnual:true,t:function(){return 'Your satisfaction with your own work-life balance right now.';}},
+ {id:'s2',dir:'S',tier:'q',fmt:'scale',lo:'Neglected',hi:'Well tended',t:function(){return 'How well are you taking care of your own health: sleep, movement, mental space?';}},
+ {id:'sy1',dir:'S',tier:'q',fmt:'yn',healthy:'Yes',t:function(){return 'Do your personal goals align with the goals you hold as a couple?';}},
+ {id:'sy2',dir:'S',tier:'q',fmt:'yn',healthy:'No',t:function(){return 'Are you still carrying something you have not fully forgiven?';}},
+ {id:'sy4',dir:'S',tier:'p',fmt:'yn',healthy:'Yes',t:function(c){return 'Do you already know your own top 3 priorities for '+P[c].coming+'?';}},
+ {id:'sy3',dir:'S',tier:'p',fmt:'yn',healthy:'Yes',t:function(c){return 'Is your partner aware of what is a clear priority for you in '+P[c].coming+' and how they can support you to achieve them?';}},
+ {id:'t3',dir:'R',tier:'p',fmt:'text',noAnnual:true,t:function(c){return 'One small thing your partner did '+P[c].past+' that made you feel loved or secure, and one moment you needed them and it slipped by.';}},
+ {id:'t1',dir:'R',tier:'p',fmt:'text',noAnnual:true,t:function(c){return 'What did the two of you do together '+P[c].past+' that you liked and want to continue? And what do you not want to carry into '+P[c].next+'?';}}
+];
+
+var TIER_IN = { pulse:['p'], monthly:['p','m'], quarterly:['p','m','q'], annual:['p','m','q','a'] };
+function questionsFor(cad){
+  return QUESTIONS.filter(function(q){
+    if(TIER_IN[cad].indexOf(q.tier)<0) return false;
+    if(cad==='annual' && q.noAnnual) return false;
+    return true;
+  });
+}
+
+/* ---------- follow-up conversations (shown only when both are done and a trigger fires) ---------- */
+var CONVOS = [
+ {id:'ey1',why:'Something is still unsaid',text:'Say it now, gently. Start soft: what you feel and what you need, not what they did wrong. The listener has one job tonight, to understand, not to defend.'},
+ {id:'ey14',why:'One of you has been mind-reading',text:'Run a fact check. Say: "Tell me the story my silence wrote in your head. I will tell you what was actually happening." Most stories shrink the moment they are checked.'},
+ {id:'ey2',why:'Feeling unappreciated',text:'Read each other’s answers about small moments aloud. Then each of you names one small thing you will repeat before the next check.'},
+ {id:'ey10',why:'A machine heard it first',text:'Ask with curiosity, never accusation: "What made it easier to tell a machine than me?"'},
+ {id:'sy4',why:'Your own priorities are unclear',text:'Take ten minutes alone and write your top 3 priorities. You cannot ask for support toward priorities you have not named for yourself.'},
+ {id:'sy3',why:'Your partner cannot support what they cannot see',text:'Share your top 3 priorities. Say where you need help, and what someone else could take over so you can focus.'},
+ {id:'ey9',why:'Lonely while together',text:'Ask: "When did you feel lonely beside me, and what was I doing, or not doing?" No fixing tonight. Just listen and map it.'},
+ {id:'e11',why:'Good news landed flat',text:'Ask: "Tell me about a piece of good news that landed flat. Show me the response you wanted." Then re-tell the news, and respond properly this time.'},
+ {id:'ey8',why:'Mocked or dismissed',text:'Ask: "Where did I dismiss you, and what did it cost?" Validate first: "it makes sense you felt that." Explanations can wait.'},
+ {id:'ey15',why:'Protective silence',text:'Ask: "Would you rather carry worry with me, or be protected from it?" Then share what is shareable. Most partners choose the worry.'},
+ {id:'ey16',why:'Tears your partner never saw',text:'Ask: "What was it? And what would make it easier to let me see, next time?" The distance is the topic, not the tears.'},
+ {id:'ey7',why:'The same challenge keeps returning',text:'Each of you writes one private sentence: what our recurring fight is really about. Swap and read. Name the war behind the proxy battles.'},
+ {id:'e3',why:'Support is not landing',text:'Ask each other: "What do you need first when you are struggling: a solution, silence, touch, or an apology? And which have I been giving instead?" The Foundation conversations go deeper on this one.',fnd:true},
+ {id:'ey3',why:'Asking directly feels unsafe',text:'Agree a signal, even a code word, for the moments when asking feels hard. Then ask: what made direct asking feel unsafe lately?'},
+ {id:'ey4',why:'No play lately',text:'Put one spontaneous, fun, or new thing on the calendar for the next two weeks. Small counts.'},
+ {id:'ny4',why:'Hidden money',text:'Amnesty applies: honesty is never punished, that was the pact. Then ask: "What made hiding feel necessary?" The pattern is the subject, not the sum.'},
+ {id:'n8',why:'Money power feels one-sided',text:'Ask: "Who holds the real veto, and are we both truly okay with that?" Agree one kind of decision that moves to joint sign-off.'},
+ {id:'wy1',why:'Someone outside is making one of you feel unsafe',text:'Name it without mockery. The listener does not defend. Then agree one boundary together. Boundaries chosen together are the opposite of control.'},
+ {id:'w6',why:'Left alone in public',text:'Ask: "When did I leave you alone in a room full of people?" Close with a pact: in public we are one unit. Disagreements happen at home.'},
+ {id:'ny5',why:'A decision is drifting',text:'Name the drift out loud, then put a decision date on the calendar. Drift is a decision nobody signed.'},
+ {id:'n4',why:'The invisible load is one-sided',text:'Each of you lists everything you track for the household. Swap lists and read silently. Then redesign a fair week for this season, with full ownership, not helping.'},
+ {id:'sy2',why:'Something is not yet forgiven',text:'Ask: "What is forgiven in words but not yet inside? What apology are you still waiting for?" Come ready to give one.'},
+ {id:'ey5',why:'Saying no does not feel safe',text:'Ask: "What would make no a safe word between us, in bed and everywhere else?"'},
+ {id:'ey6',why:'One of you withdraws',text:'Agree a timeout protocol: at least 20 minutes apart, with a guaranteed return time. A flooded body needs calm first, not persuasion. The Foundation conversations go deeper on shutdown.',fnd:true},
+ {id:'ey11',why:'Serious worry about the future of us',text:'Do not leave this on the page. Worry this serious does not wait for an anniversary. Put the conversation on the calendar this week.'},
+ {id:'e6',why:'Physical quiet',text:'First ask: "When we go quiet physically, what story do you tell yourself about why?" Correct the stories before negotiating anything. Then: "When did you last feel desired?"'},
+ {id:'e10',why:'Initiation is one-sided',text:'First ask: "When we go quiet physically, what story do you tell yourself about why?" Correct the stories before negotiating anything. Then: "When did you last feel desired?"'},
+ {id:'w2',why:'Family strain',text:'Ask: "Which expectation or tradition is costing us most? What must we do differently from both families?"'},
+ {id:'na1',why:'Two different futures',text:'Do the sketch exercise first: each of you draws your three-year picture separately, then merge them into one you both sign. Two different pictures is the finding, not the failure.'},
+ {id:'na2',why:'"Enough" is undefined',text:'Ask: "What does enough look like for us: the number, the home, the lifestyle?" Without a definition, the default is always more.'},
+ {id:'na3',why:'No career procedure',text:'Agree the procedure before any offer arrives: how do we decide whose dream leads when one costs the other?'},
+ {id:'na4',why:'The unglamorous audit',text:'One afternoon: accounts, passwords, documents, wishes. One list, one shared location, done this month.'},
+ {id:'na5',why:'The family contract is implicit',text:'Write down the contract you are already living: what you give both sets of parents in money, time and presence, and where it ends.'}
+];
+var CONVO_BY_ID = {}; CONVOS.forEach(function(c){ CONVO_BY_ID[c.id]=c; });
+
+var YEAR_PROMPTS = [
+ 'Our top three shared goals for the year ahead.',
+ 'One major decision we need to make together this year.',
+ 'What we want more of in the next twelve months.',
+ 'What we want less of, starting now.',
+ 'Each of you separately sketch "us in three years": where we live, what we own, what our workdays look like. Then compare the two pictures. Two different pictures is the finding, not the failure.',
+ 'What must change in either of our careers this year for that picture to be reachable? And what does it cost the other?'
+];
+
+/* ---------- schedule: which check is due? 26 checks per year, every 2 weeks ---------- */
+function dueCheck(){
+  var k = parseInt(lsGet('ewns_pos')||'0',10); // completed checks in current year-cycle
+  var n = (k % 26) + 1; // the next one
+  if(n % 2 === 1) return 'pulse';
+  if(n === 24) return 'annual';
+  if(n === 6 || n === 12 || n === 18) return 'quarterly';
+  return 'monthly';
+}
+
+/* ---------- app state ---------- */
+var S = { cad:null, qs:[], idx:0, partner:1, names:['',''], ans:[{},{}] };
+
+var CADS = [
+ {key:'pulse', name:'The check-in', desc:'Every two weeks. A short pulse of how you both are.', mins:'about 10 min'},
+ {key:'monthly', name:'The monthly check', desc:'Every second check goes a level deeper.', mins:'about 15 min'},
+ {key:'quarterly', name:'The quarterly reading', desc:'The full picture, four times a year.', mins:'about 30 min'},
+ {key:'annual', name:'The annual summit', desc:'Once a year: less looking back, more looking ahead.', mins:'about 45 min'}
+];
+
+function el(id){ return document.getElementById(id); }
+function show(id){
+  ['view-home','view-pact','view-names','view-q','view-handoff','view-results','view-foundation','view-unlock','view-history'].forEach(function(v){
+    el(v).classList.toggle('hidden', v!==id);
+  });
+  var CADTAG={pulse:'Every 2 weeks',monthly:'Monthly',quarterly:'Quarterly',annual:'Annual'};
+  var tag='';
+  if(id==='view-foundation') tag='Foundation';
+  else if(['view-pact','view-names','view-q','view-handoff','view-results'].indexOf(id)>=0 && S.cad) tag=CADTAG[S.cad]||'';
+  el('ctxTag').textContent=tag;
+  el('ctxTag').classList.toggle('hidden',!tag);
+  window.scrollTo(0,0);
+}
+
+/* ---------- home ---------- */
+function unlocked(){ return !!lsGet('ewns_unlocked'); }
+function renderHome(){
+  var due = dueCheck();
+  var host = el('rhythmCards'); host.innerHTML='';
+  CADS.forEach(function(c){
+    var d = document.createElement('div');
+    d.className='card tap'; d.tabIndex=0; d.setAttribute('role','button');
+    var badge='';
+    if(c.key===due && (c.key==='pulse'||unlocked())) badge='<span class="due">Start here</span>';
+    else if(c.key!=='pulse' && !unlocked()) badge='<span class="due" style="background:var(--chip);color:var(--muted)">With the book</span>';
+    d.innerHTML = '<div><h3 style="margin:0 0 6px"><span>'+c.name+'</span>'+badge+'</h3>'+
+      '<p class="small" style="margin:0">'+c.desc+'</p></div><div class="mins">'+c.mins+'</div>';
+    function go(){ startCadence(c.key); }
+    d.addEventListener('click',go);
+    d.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); }});
+    host.appendChild(d);
+  });
+  var hh=el('homeHistory'); hh.innerHTML='';
+  var hist=histLoad();
+  if(hist.length){
+    var d=document.createElement('div'); d.className='card tap'; d.tabIndex=0; d.setAttribute('role','button');
+    d.style.marginTop='16px';
+    d.innerHTML='<h3 style="margin:0 0 4px">Your past readings ('+hist.length+')</h3><p class="small" style="margin:0">Saved only in this browser.</p>';
+    function goH(){ renderHistory(); show('view-history'); }
+    d.addEventListener('click',goH);
+    d.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); goH(); }});
+    hh.appendChild(d);
+  }
+}
+
+function startCadence(cad){
+  S.cad = cad;
+  if(cad!=='pulse' && !unlocked()){
+    el('unlockErr').classList.add('hidden'); el('unlockCode').value='';
+    show('view-unlock'); return;
+  }
+  if(!lsGet('ewns_pact')){ show('view-pact'); return; }
+  show('view-names');
+}
+/* ---------- reader code (checked on this device; only the hash lives in the page) ---------- */
+var UNLOCK_HASH='379381054c7bd0933f1f8ff2cf7b2f0386d0ef45764105809cef0bd005cb280b';
+function sha256hex(str){
+  return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(function(buf){
+    return Array.prototype.map.call(new Uint8Array(buf),function(b){return ('0'+b.toString(16)).slice(-2);}).join('');
+  });
+}
+el('unlockGo').addEventListener('click',function(){
+  var norm=(el('unlockCode').value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(!norm){ el('unlockErr').classList.remove('hidden'); return; }
+  if(!(window.crypto&&crypto.subtle)){ el('unlockErr').textContent='Unlocking needs a modern browser. Try updating or another browser.'; el('unlockErr').classList.remove('hidden'); return; }
+  sha256hex(norm).then(function(h){
+    if(h===UNLOCK_HASH){
+      lsSet('ewns_unlocked','1');
+      if(!lsGet('ewns_pact')){ show('view-pact'); } else { show('view-names'); }
+    } else {
+      el('unlockErr').classList.remove('hidden');
+    }
+  });
+});
+el('unlockFree').addEventListener('click',function(){ startCadence('pulse'); });
+el('unlockBack').addEventListener('click',function(){ renderHome(); show('view-home'); });
+
+/* ---------- reading history (this browser only) ---------- */
+function histLoad(){ try{ var h=JSON.parse(lsGet('ewns_history')||'[]'); return Array.isArray(h)?h:[]; }catch(e){ return []; } }
+function histStore(h){ lsSet('ewns_history', JSON.stringify(h)); }
+function gapChipHtml(g){
+  if(g==null) return '<span class="gapchip">-</span>';
+  var cls=g>=4?'talk':(g>=2?'watch':'');
+  return '<span class="gapchip '+cls+'">'+g+'</span>';
+}
+function renderHistory(){
+  var hist=histLoad(), host=el('histBody');
+  if(!hist.length){ host.innerHTML='<p>No saved readings yet.</p>'; return; }
+  var CADTAG={pulse:'Check-in',monthly:'Monthly',quarterly:'Quarterly',annual:'Annual'};
+  var html='<div class="card" style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:.9rem"><tr style="text-align:left"><th style="padding:6px 8px">Date</th><th style="padding:6px 8px">Check</th><th style="padding:6px 8px">Connection</th><th style="padding:6px 8px">Direction</th><th style="padding:6px 8px">Outside</th></tr>';
+  hist.slice().reverse().forEach(function(e){
+    html+='<tr><td style="padding:6px 8px;white-space:nowrap">'+esc(e.d)+'</td><td style="padding:6px 8px">'+ (CADTAG[e.c]||esc(e.c)) +'</td>'+
+      '<td style="padding:6px 8px">'+gapChipHtml(e.r&&e.r.E?e.r.E[2]:null)+'</td>'+
+      '<td style="padding:6px 8px">'+gapChipHtml(e.r&&e.r.N?e.r.N[2]:null)+'</td>'+
+      '<td style="padding:6px 8px">'+gapChipHtml(e.r&&e.r.W?e.r.W[2]:null)+'</td></tr>';
+  });
+  html+='</table></div><p class="small">The chips show the largest gap between your two answers in each direction at that reading.</p>';
+  host.innerHTML=html;
+}
+el('histDelete').addEventListener('click',function(){ histStore([]); renderHistory(); renderHome(); });
+el('histBack').addEventListener('click',function(){ renderHome(); show('view-home'); });
+el('pactAgree').addEventListener('click',function(){
+  lsSet('ewns_pact','1');
+  if(!lsGet('ewns_fnd_seen')){ lsSet('ewns_fnd_seen','1'); showFoundation(true); }
+  else show('view-names');
+});
+function showFoundation(onboarding){
+  renderFnd();
+  el('fndOnboardIntro').classList.toggle('hidden',!onboarding);
+  el('foundationGo').classList.toggle('hidden',!onboarding);
+  el('foundationBack').classList.toggle('hidden',!!onboarding);
+  el('fndTitle').textContent = onboarding ? 'First, your baseline' : 'The Foundation conversations';
+  show('view-foundation');
+}
+el('foundationGo').addEventListener('click',function(){ show('view-names'); });
+el('homeFnd').addEventListener('click',function(){ showFoundation(false); });
+el('homeFnd').addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); showFoundation(false); }});
+el('namesBack').addEventListener('click',function(){ show('view-home'); });
+el('namesGo').addEventListener('click',function(){
+  S.names[0] = el('name1').value.trim() || 'Partner 1';
+  S.names[1] = el('name2').value.trim() || 'Partner 2';
+  S.qs = questionsFor(S.cad);
+  S.idx = 0; S.partner = 1; S.ans = [{},{}];
+  renderQ();
+  show('view-q');
+});
+
+/* ---------- questions ---------- */
+function renderQ(){
+  var q = S.qs[S.idx];
+  el('qWho').textContent = S.names[S.partner-1] + ' · ' + (S.idx+1) + ' of ' + S.qs.length;
+  el('qBar').style.width = Math.round(100*S.idx/S.qs.length)+'%';
+  var dirEl = el('qDir');
+  dirEl.textContent = DIRNAME[q.dir]; dirEl.className = 'qdir '+q.dir;
+  el('qText').textContent = q.t(S.cad);
+  var hint = '';
+  if(q.dir==='S' && q.fmt!=='text') hint = 'About yourself. Your answers here are shown to you both but never scored against each other.';
+  if(q.fmt==='text') hint = 'A sentence or two is plenty. You will read these to each other at the end.';
+  el('qHint').textContent = hint;
+  var host = el('qInput'); host.innerHTML='';
+  el('qNext').classList.add('hidden');
+  if(q.fmt==='scale'){
+    var grid=document.createElement('div'); grid.className='scale';
+    for(var i=1;i<=10;i++){ (function(v){
+      var b=document.createElement('button'); b.textContent=v;
+      b.addEventListener('click',function(){ answer(v); });
+      grid.appendChild(b);
+    })(i); }
+    host.appendChild(grid);
+    var ends=document.createElement('div'); ends.className='scaleends';
+    ends.innerHTML='<span>1 · '+q.lo+'</span><span>10 · '+q.hi+'</span>';
+    host.appendChild(ends);
+  } else if(q.fmt==='yn'){
+    var d=document.createElement('div'); d.className='opts';
+    ['Yes','No'].forEach(function(v){
+      var b=document.createElement('button'); b.textContent=v;
+      b.addEventListener('click',function(){ answer(v); });
+      d.appendChild(b);
+    });
+    host.appendChild(d);
+  } else if(q.fmt==='pick'){
+    var d2=document.createElement('div'); d2.className='opts';
+    q.opts.forEach(function(v){
+      var b=document.createElement('button'); b.textContent=v;
+      b.addEventListener('click',function(){ answer(v); });
+      d2.appendChild(b);
+    });
+    host.appendChild(d2);
+  } else if(q.fmt==='pick2'){
+    var d3=document.createElement('div'); d3.className='opts';
+    [['a',q.a],['b',q.b]].forEach(function(pair){
+      var b=document.createElement('button'); b.textContent=pair[1];
+      b.addEventListener('click',function(){ answer(pair[0]); });
+      d3.appendChild(b);
+    });
+    host.appendChild(d3);
+  } else if(q.fmt==='text'){
+    var ta=document.createElement('textarea');
+    ta.value = S.ans[S.partner-1][q.id]||'';
+    ta.id='qTa';
+    host.appendChild(ta);
+    var nextB = el('qNext'); nextB.classList.remove('hidden');
+    nextB.onclick = function(){ answer(el('qTa').value.trim()); };
+    setTimeout(function(){ ta.focus(); },50);
+  }
+}
+el('qBack').addEventListener('click',function(){
+  if(S.idx>0){ S.idx--; renderQ(); }
+  else if(S.partner===1){ show('view-names'); }
+});
+function answer(v){
+  S.ans[S.partner-1][S.qs[S.idx].id]=v;
+  if(S.idx < S.qs.length-1){ S.idx++; renderQ(); }
+  else if(S.partner===1){
+    S.partner=2; S.idx=0;
+    el('handoffTitle').textContent = 'Thank you, '+S.names[0]+'.';
+    el('handoffText').textContent = 'Now pass the device to '+S.names[1]+'. No peeking at each other’s answers: you will see everything together at the end.';
+    el('handoffGo').textContent = 'I’m '+S.names[1]+', start';
+    show('view-handoff');
+  } else {
+    finish();
+  }
+}
+el('handoffGo').addEventListener('click',function(){ renderQ(); show('view-q'); });
+
+/* ---------- results ---------- */
+function zoneOf(avg){
+  if(avg>=8) return {label:'Strong',color:'var(--good)'};
+  if(avg>=5) return {label:'Tend it',color:'var(--warn)'};
+  if(avg>=3) return {label:'Act now',color:'var(--act)'};
+  return {label:'Urgent',color:'var(--urgent)'};
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function finish(){
+  var k = parseInt(lsGet('ewns_pos')||'0',10); lsSet('ewns_pos', String(k+1));
+  var qs=S.qs, a1=S.ans[0], a2=S.ans[1];
+  var html='';
+  html+='<h1>Your reading</h1>';
+  html+='<p class="small">'+esc(S.names[0])+' is the filled dot, '+esc(S.names[1])+' the ring. Ten means healthy, always.</p>';
+  html+='<!--COMPASS-->';
+
+  var dirs=['E','N','W'];
+  var maxGapDir=null, maxGap=-1, histR={};
+  var compassHtml='';
+  dirs.forEach(function(d){
+    var scales=qs.filter(function(q){return q.dir===d&&q.fmt==='scale';});
+    if(!scales.length) return;
+    var s1=0,s2=0,n=0,gmax=0;
+    scales.forEach(function(q){
+      var v1=a1[q.id], v2=a2[q.id];
+      if(typeof v1==='number'&&typeof v2==='number'){ s1+=v1; s2+=v2; n++; gmax=Math.max(gmax,Math.abs(v1-v2)); }
+    });
+    if(!n) return;
+    var av1=s1/n, av2=s2/n, avg=(av1+av2)/2, z=zoneOf(avg);
+    histR[d]=[Math.round(av1*10)/10, Math.round(av2*10)/10, gmax];
+    if(gmax>maxGap){ maxGap=gmax; maxGapDir=d; }
+    var gapCls = gmax>=4?'talk':(gmax>=2?'watch':'');
+    var gapTxt = gmax>=4?'Gap '+gmax+' · talk about it':(gmax>=2?'Gap '+gmax+' · keep watching':'Aligned');
+    html+='<div class="card">';
+    html+='<div class="eyebrow">'+DIRNAME[d]+'</div>';
+    html+='<div class="legend"><span>'+esc(S.names[0])+' <b>'+av1.toFixed(1)+'</b></span><span>'+esc(S.names[1])+' <b>'+av2.toFixed(1)+'</b></span><span class="zone" style="color:'+z.color+'">'+z.label+'</span> <span class="gapchip '+gapCls+'">'+gapTxt+'</span></div>';
+    html+='<div class="band"><span class="dot p1" style="left:'+((av1-1)/9*100)+'%"></span><span class="dot p2" style="left:'+((av2-1)/9*100)+'%"></span></div>';
+    html+='<p class="small" style="margin:8px 0 0">More on this direction in Chapter '+CHAPTER[d]+' of The Missing System.</p>';
+    html+='</div>';
+  });
+
+  /* the compass: both partners drawn on each direction's axis; the colored stretch is the gap */
+  if(Object.keys(histR).length){
+    var CX=160, CY=170, RMAX=120;
+    function rOf(score){ return 12*Math.max(1,Math.min(10,score)); }
+    var AX={ N:[0,-1], E:[1,0], S:[0,1], W:[-1,0] };
+    var LBL={ N:['Direction',160,26], E:['Connection',268,152], S:['Yourself',160,318], W:['Outside',52,152] };
+    var svg='<svg viewBox="0 0 320 330" role="img" aria-label="Compass reading" style="width:100%;max-width:360px;display:block;margin:0 auto">';
+    [30,60,90,120].forEach(function(r){ svg+='<circle cx="'+CX+'" cy="'+CY+'" r="'+r+'" fill="none" style="stroke:var(--line)" stroke-width="1"/>'; });
+    ['N','E','W'].forEach(function(d){
+      var a=AX[d];
+      svg+='<line x1="'+CX+'" y1="'+CY+'" x2="'+(CX+a[0]*RMAX)+'" y2="'+(CY+a[1]*RMAX)+'" style="stroke:var(--line)" stroke-width="1.5"/>';
+    });
+    svg+='<line x1="'+CX+'" y1="'+CY+'" x2="'+CX+'" y2="'+(CY+RMAX)+'" style="stroke:var(--line)" stroke-width="1.5" stroke-dasharray="3 5"/>';
+    ['N','E','W','S'].forEach(function(d){
+      var l=LBL[d], dim=(d==='S')?';opacity:.55':'';
+      svg+='<text x="'+l[1]+'" y="'+l[2]+'" text-anchor="middle" style="fill:var(--muted);font:600 11px Public Sans,sans-serif;letter-spacing:.08em'+dim+'">'+l[0].toUpperCase()+'</text>';
+    });
+    ['E','N','W'].forEach(function(d){
+      if(!histR[d]) return;
+      var a=AX[d], v=histR[d];
+      var g=v[2], col = g>=4?'var(--urgent)':(g>=2?'var(--warn)':'var(--good)');
+      var p1=[CX+a[0]*rOf(v[0]), CY+a[1]*rOf(v[0])], p2=[CX+a[0]*rOf(v[1]), CY+a[1]*rOf(v[1])];
+      svg+='<line x1="'+p1[0]+'" y1="'+p1[1]+'" x2="'+p2[0]+'" y2="'+p2[1]+'" style="stroke:'+col+'" stroke-width="6" stroke-linecap="round" opacity=".85"/>';
+      svg+='<circle cx="'+p1[0]+'" cy="'+p1[1]+'" r="8" style="fill:var(--ink);stroke:var(--paper)" stroke-width="2"/>';
+      svg+='<circle cx="'+p2[0]+'" cy="'+p2[1]+'" r="8" style="fill:var(--paper);stroke:var(--ink)" stroke-width="3"/>';
+    });
+    svg+='</svg>';
+    compassHtml='<div class="card"><div class="eyebrow">Your compass</div>'+svg+
+      '<p class="small" style="margin:8px 0 0;text-align:center">Farther out is healthier. The colored stretch between your two dots is the distance to talk about. Yourself is read alone, never compared.</p></div>';
+  }
+  html=html.replace('<!--COMPASS-->', compassHtml);
+
+  /* South: never compared */
+  var south=qs.filter(function(q){return q.dir==='S'&&q.fmt==='scale';});
+  if(south.length){
+    html+='<div class="card"><div class="eyebrow">'+DIRNAME.S+'</div><p class="small" style="margin-bottom:10px">About each of you alone. Read together, never scored against each other.</p><div class="sbys">';
+    [0,1].forEach(function(pi){
+      var s=0,n=0; south.forEach(function(q){ var v=S.ans[pi][q.id]; if(typeof v==='number'){s+=v;n++;} });
+      var av=n?s/n:0, z=zoneOf(av);
+      html+='<div class="cell"><div class="who">'+esc(S.names[pi])+'</div><b style="font-size:1.3rem;font-variant-numeric:tabular-nums">'+ (n?av.toFixed(1):'-') +'</b> <span class="zone" style="color:'+z.color+'">'+(n?z.label:'')+'</span></div>';
+    });
+    html+='</div><p class="small" style="margin:8px 0 0">More on this direction in Chapter '+CHAPTER.S+' of The Missing System.</p></div>';
+  }
+
+  /* conversations: triggers, only now that both are done */
+  var fired=[], seen={}, alsoLow=[];
+  qs.forEach(function(q){
+    var v1=a1[q.id], v2=a2[q.id], hit=false;
+    if(q.fmt==='scale'){ hit=(v1<=6)||(v2<=6); }
+    else if(q.fmt==='yn'){ hit=(v1!==q.healthy)||(v2!==q.healthy); }
+    else if(q.fmt==='pick2'){ hit=(v1!==q.healthy)||(v2!==q.healthy); }
+    if(hit){
+      var c=CONVO_BY_ID[q.id];
+      if(c && !seen[c.why]){ seen[c.why]=true; fired.push(c); }
+      else if(!c && q.fmt==='scale' && q.dir!=='S'){ alsoLow.push(q.t(S.cad)); }
+    }
+  });
+  html+='<h2 style="margin-top:26px">Your conversations</h2>';
+  if(fired.length){
+    html+='<p class="small">These appear only because your own answers called for them. Pick one or two, not all. Put a name and a day on each.</p>';
+    fired.forEach(function(c){
+      html+='<div class="convo"><div class="why">'+esc(c.why)+'</div><p>'+esc(c.text)+'</p>'+(c.fnd?'<p style="margin-top:8px"><a href="#" class="fndlink">Open the Foundation conversations</a></p>':'')+'</div>';
+    });
+    if(alsoLow.length){
+      html+='<div class="convo"><div class="why">Also worth a word</div><p>One of you scored these low: '+esc(alsoLow.join(' · '))+'</p><p style="margin-top:8px">For each, ask one question: what would move this one point before the next check?</p></div>';
+    }
+  } else {
+    html+='<p>Nothing flagged this time. Name that out loud to each other: strengths that go unnamed erode.</p>';
+  }
+
+  /* picks side by side */
+  if(a1.c1||a2.c1){
+    html+='<h2 style="margin-top:26px">What you each need most</h2><div class="sbys">';
+    [0,1].forEach(function(pi){
+      html+='<div class="cell"><div class="who">'+esc(S.names[pi])+'</div>'+esc(S.ans[pi].c1||'-')+'</div>';
+    });
+    html+='</div><p class="small" style="margin-top:8px">This is the prescription for the next two weeks: deliver what your partner picked, daily.</p>';
+  }
+
+  /* reflections side by side */
+  var texts=qs.filter(function(q){return q.fmt==='text';});
+  texts.forEach(function(q){
+    if(!(a1[q.id]||a2[q.id])) return;
+    html+='<h2 style="margin-top:26px">'+esc(q.t(S.cad))+'</h2><div class="sbys">';
+    [0,1].forEach(function(pi){
+      html+='<div class="cell"><div class="who">'+esc(S.names[pi])+'</div>'+esc(S.ans[pi][q.id]||'-')+'</div>';
+    });
+    html+='</div>';
+  });
+
+  /* annual extras */
+  if(S.cad==='annual'){
+    html+='<h2 style="margin-top:26px">Talk through together</h2>';
+    YEAR_PROMPTS.forEach(function(p){ html+='<div class="card" style="padding:14px 16px"><p style="margin:0">'+esc(p)+'</p></div>'; });
+    html+='<div class="card pact"><h3 style="color:#fdfbf5">Want to go deeper?</h3><p>If today surfaced things that feel older than this year, the Foundation conversations are here: twelve one-time conversations, ten quiet minutes each.</p><button class="btn gold" id="resFnd">Open the Foundation</button></div>';
+  }
+
+  html+='<div class="btnrow" style="margin-top:26px"><button class="btn line" id="resSave">Save this reading on this device</button><a class="btn line" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Couple%20Compass%20check-in&details=Open%20the%20Compass%20together%3A%20this%20page%20tells%20you%20which%20check%20is%20due.&recur=RRULE:FREQ=WEEKLY;INTERVAL=2">Schedule the next check</a><button class="btn quiet" id="resHome">Done</button></div>';
+  html+='<p class="small hidden" id="resSaved">Saved in this browser. You will find it under Your past readings.</p>';
+  html+='<footer class="site">From <em>The Missing System</em> by Dr. Dee Gupta · <a href="https://mybook.to/thmissingsystem" target="_blank" rel="noopener">Get the book</a></footer>';
+
+  var host=el('view-results');
+  host.innerHTML=html;
+  host.querySelectorAll('.fndlink').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); showFoundation(false); }); });
+  var rf=document.getElementById('resFnd'); if(rf) rf.addEventListener('click',function(){ showFoundation(false); });
+  document.getElementById('resHome').addEventListener('click',function(){ renderHome(); show('view-home'); });
+  document.getElementById('resSave').addEventListener('click',function(){
+    var h=histLoad();
+    h.push({d:new Date().toISOString().slice(0,10), c:S.cad, r:histR});
+    histStore(h);
+    var ok=histLoad().length===h.length;
+    var note=document.getElementById('resSaved');
+    note.textContent = ok ? 'Saved in this browser. You will find it under Your past readings.' : 'Could not save here (a private window, perhaps). Your reading stays on screen until you close the page.';
+    note.classList.remove('hidden');
+  });
+  show('view-results');
+}
+
+/* ---------- foundation: questions, notes, save ---------- */
+var FND = [
+ {g:'Begin with yourself', qs:[
+  'How does your stress or low mood show up in ways I might be misreading as something else?',
+  'When you are spiraling or insecure, what actually helps: reassurance, logic, touch, space? And how can you signal you need it without feeling ashamed?',
+  'Do you feel like a burden when you need help or comfort? Where did you learn that needing something makes you weak?',
+  'When you imagine me judging you, what exactly am I saying? And is that voice actually mine, or someone older?',
+  "What did your parents' marriage teach you that you are repeating without ever having chosen it?"]},
+ {g:'Face each other', qs:[
+  'When we fight, what do you actually need from me first: a solution, silence, touch, or an apology?',
+  'How do you want me to raise a problem so that you can actually hear it?',
+  'What do I do in arguments that makes you shut down or stop trying?',
+  'What are you most afraid I would think of you if you fail or lose something in life?',
+  'Is there anything you imagine or fantasize about that you have decided I would judge you for?']},
+ {g:'What you are building', qs:[
+  'What did money mean in the house you grew up in? And what are you still trying to fix, prove, or avoid because of it?',
+  'In our worst fights, when leaving gets mentioned or hinted, what does that do to your sense of safety for the weeks afterward? End this one with a pact: we fight inside the relationship, never about it.']}
+];
+function fndLoad(){ try{ return JSON.parse(lsGet('ewns_fnd_notes')||'{}')||{}; }catch(e){ return {}; } }
+function fndStore(notes){ lsSet('ewns_fnd_notes', JSON.stringify(notes)); }
+function renderFnd(){
+  var notes=fndLoad(), host=el('fndBody'); host.innerHTML=''; var n=0;
+  FND.forEach(function(grp){
+    var h=document.createElement('h3'); h.textContent=grp.g; host.appendChild(h);
+    grp.qs.forEach(function(q){
+      n++;
+      var card=document.createElement('div'); card.className='card'; card.style.padding='14px 16px';
+      var p=document.createElement('p'); p.innerHTML='<b>'+n+'.</b> '; p.appendChild(document.createTextNode(q)); p.style.marginBottom='10px';
+      card.appendChild(p);
+      [1,2].forEach(function(pi){
+        var lab=document.createElement('div'); lab.className='small'; lab.textContent='Partner '+pi; lab.style.margin='6px 0 4px';
+        var ta=document.createElement('textarea'); ta.style.minHeight='60px';
+        var key='q'+n+'p'+pi;
+        ta.value=notes[key]||'';
+        ta.addEventListener('input',function(){ var cur=fndLoad(); cur[key]=ta.value; fndStore(cur); });
+        card.appendChild(lab); card.appendChild(ta);
+      });
+      host.appendChild(card);
+    });
+  });
+}
+function fndText(){
+  var notes=fndLoad(), out='The Foundation conversations · The Couple Compass\n\n', n=0;
+  FND.forEach(function(grp){
+    out+=grp.g.toUpperCase()+'\n\n';
+    grp.qs.forEach(function(q){
+      n++;
+      out+=n+'. '+q+'\n';
+      out+='Partner 1: '+(notes['q'+n+'p1']||'')+'\n';
+      out+='Partner 2: '+(notes['q'+n+'p2']||'')+'\n\n';
+    });
+  });
+  return out;
+}
+el('fndCopy').addEventListener('click',function(){
+  var t=fndText(), done=function(){ el('fndCopied').classList.remove('hidden'); };
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done,function(){ fallbackCopy(t,done); }); }
+    else fallbackCopy(t,done);
+  }catch(e){ fallbackCopy(t,done); }
+});
+function fallbackCopy(t,done){
+  var ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta);
+  ta.select(); try{ document.execCommand('copy'); done(); }catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ---------- foundation nav ---------- */
+el('foundationBack').addEventListener('click',function(){ renderHome(); show('view-home'); });
+
+/* ---------- boot (?mode= supported for reminder links) ---------- */
+(function(){
+  renderHome();
+  try{
+    var m=new URLSearchParams(location.search).get('mode');
+    if(m==='weekly') m='pulse';
+    if(m && TIER_IN[m]) startCadence(m);
+  }catch(e){}
+})();
+</script>
+
+
+</body></html>
